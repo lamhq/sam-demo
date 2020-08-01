@@ -1,0 +1,8 @@
+tests/*
+node_modules/
+.vscode/
+.eslintrc.js
+package.json
+README.md
+samconfig.toml
+template.yaml
