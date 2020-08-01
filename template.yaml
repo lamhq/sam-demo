@@ -10,18 +10,29 @@ Globals:
   Function:
     Runtime: nodejs12.x
     Timeout: 3
+    CodeUri: ./
 
 Resources:
   GetUsersFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: src/admin/handles/
-      Handler: user.getUsers
+      Handler: src/admin/handlers/user.getUsers
       Events:
         GetUsers:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /admin/users
+            Method: get
+
+  GetUserFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      Handler: src/admin/handlers/user.getUser
+      Events:
+        GetUsers:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /admin/users/{id}
             Method: get
 
 Outputs:

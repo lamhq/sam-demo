@@ -13,11 +13,10 @@
 exports.getUsers = async (event, context) => {
   let response;
   try {
-    // const ret = await axios(url);
     response = {
       statusCode: 200,
       body: JSON.stringify({
-        message: 'hello world',
+        message: 'get a list of users',
 
       }),
     };
@@ -26,5 +25,14 @@ exports.getUsers = async (event, context) => {
     return err;
   }
 
+  return response;
+};
+
+exports.getUser = async (event, context) => {
+  const { id } = event.pathParameters;
+  const response = {
+    statusCode: 200,
+    body: JSON.stringify(id),
+  };
   return response;
 };

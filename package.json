@@ -8,8 +8,9 @@
     "axios": "^0.18.0"
   },
   "scripts": {
+    "start": "sam build && sam local start-api",
     "test": "mocha tests/unit/",
-    "deploy": "sam build -m=package.json && sam deploy",
+    "deploy": "sam build && sam deploy",
     "cleanup": "aws cloudformation delete-stack --stack-name sam-demo --region us-east-1"
   },
   "devDependencies": {
