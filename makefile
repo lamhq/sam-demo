@@ -1,0 +1,3 @@
+.DEFAULT:
+	cp -R src $(ARTIFACTS_DIR)
+

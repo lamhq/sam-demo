@@ -1,9 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: >
-  sam-demo
-
-  Sample SAM Template for sam-demo
+Description: SAM Template for sample RESTful API app
   
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
@@ -11,10 +8,26 @@ Globals:
     Runtime: nodejs12.x
     Timeout: 3
     CodeUri: ./
+    Layers:
+      - !Ref DependencyLayer
 
 Resources:
+  DependencyLayer:
+    Type: AWS::Serverless::LayerVersion
+    Metadata:
+      BuildMethod: nodejs12.x
+    Properties:
+      Description: Nodejs Dependencies
+      ContentUri: ./
+      CompatibleRuntimes:
+        - nodejs12.x
+      LicenseInfo: 'MIT'
+      RetentionPolicy: Delete
+
   GetUsersFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Metadata:
+      BuildMethod: makefile
     Properties:
       Handler: src/admin/handlers/user.getUsers
       Events:
@@ -26,6 +39,8 @@ Resources:
 
   GetUserFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Metadata:
+      BuildMethod: makefile
     Properties:
       Handler: src/admin/handlers/user.getUser
       Events:

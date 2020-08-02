@@ -1,8 +1,7 @@
-tests/*
-node_modules/
 .vscode/
+src/
 .eslintrc.js
-package.json
-README.md
+makefile
 samconfig.toml
 template.yaml
+README.md
