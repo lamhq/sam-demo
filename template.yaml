@@ -29,7 +29,7 @@ Resources:
     Metadata:
       BuildMethod: makefile
     Properties:
-      Handler: src/admin/handlers/user.getUsers
+      Handler: dist/admin/handlers/user.getUsers
       Events:
         GetUsers:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -42,7 +42,7 @@ Resources:
     Metadata:
       BuildMethod: makefile
     Properties:
-      Handler: src/admin/handlers/user.getUser
+      Handler: dist/admin/handlers/user.getUser
       Events:
         GetUsers:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api

@@ -1,4 +1,5 @@
-const axios = require('axios');
+import axios from 'axios';
+import { APIGatewayProxyHandler } from 'aws-lambda';
 
 /**
  *
@@ -12,15 +13,12 @@ const axios = require('axios');
  * @returns {Object} object - API Gateway Lambda Proxy Output Format
  *
  */
-exports.getUsers = async (event, context) => {
+export const getUsers: APIGatewayProxyHandler = async (event, context) => {
   let response;
   try {
-    const resp = await axios.get(
-      'https://www.metaweather.com/api/location/search',
-      {
-        params: { query: 'London' },
-      },
-    );
+    const resp = await axios.get('https://www.metaweather.com/api/location/search', {
+      params: { query: 'London' },
+    });
 
     response = {
       statusCode: 200,
@@ -34,11 +32,14 @@ exports.getUsers = async (event, context) => {
   return response;
 };
 
-exports.getUser = async (event, context) => {
-  const { id } = event.pathParameters;
+interface IdPath {
+  id: string;
+}
+
+export const getUser: APIGatewayProxyHandler = async (event, context) => {
   const response = {
     statusCode: 200,
-    body: JSON.stringify(id),
+    body: JSON.stringify('123'),
   };
   return response;
 };
