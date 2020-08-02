@@ -24,12 +24,12 @@ Resources:
       LicenseInfo: 'MIT'
       RetentionPolicy: Delete
 
-  GetUsersFunction:
+  GetUserListFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Metadata:
       BuildMethod: makefile
     Properties:
-      Handler: dist/admin/handlers/user.getUsers
+      Handler: dist/admin/handlers/user.getUserList
       Events:
         GetUsers:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -37,12 +37,12 @@ Resources:
             Path: /admin/users
             Method: get
 
-  GetUserFunction:
+  GetUserDetailFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Metadata:
       BuildMethod: makefile
     Properties:
-      Handler: dist/admin/handlers/user.getUser
+      Handler: dist/admin/handlers/user.getUserDetail
       Events:
         GetUsers:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -57,9 +57,9 @@ Outputs:
   GetUsersApi:
     Description: "API Gateway endpoint URL for Prod stage for Hello World function"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/admin/users/"
-  GetUsersFunction:
+  GetUserListFunction:
     Description: "Hello World Lambda Function ARN"
-    Value: !GetAtt GetUsersFunction.Arn
-  GetUsersFunctionIamRole:
+    Value: !GetAtt GetUserListFunction.Arn
+  GetUserListFunctionIamRole:
     Description: "Implicit IAM Role created for Hello World function"
-    Value: !GetAtt GetUsersFunctionRole.Arn
+    Value: !GetAtt GetUserListFunctionRole.Arn
