@@ -8,6 +8,7 @@
     "axios": "^0.18.0"
   },
   "scripts": {
+    "tsc": "rimraf ./dist && tsc",
     "build": "rimraf ./dist && tsc && sam build",
     "start": "npm run build && sam local start-api",
     "test": "mocha tests/unit/",
