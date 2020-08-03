@@ -24,42 +24,62 @@ Resources:
       LicenseInfo: 'MIT'
       RetentionPolicy: Delete
 
+  AuthorizeFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Metadata:
+      BuildMethod: makefile
+    Properties:
+      Handler: dist/common/handlers.authorize
+  
+  RestfulApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Auth:
+        Authorizers:
+          BearerTokenAuthorizer:
+            FunctionArn: !GetAtt AuthorizeFunction.Arn
+
   GetUserListFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Metadata:
       BuildMethod: makefile
     Properties:
-      Handler: dist/admin/handlers/user.getUserList
+      Handler: dist/admin/user/handlers.getUserList
       Events:
-        GetUsers:
+        GetUserListEvent:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /admin/users
             Method: get
+            RestApiId: !Ref RestfulApi
+            Auth:
+              Authorizer: BearerTokenAuthorizer
 
   GetUserDetailFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Metadata:
       BuildMethod: makefile
     Properties:
-      Handler: dist/admin/handlers/user.getUserDetail
+      Handler: dist/admin/user/handlers.getUserDetail
       Events:
-        GetUsers:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+        GetUserDetailEvent:
+          # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Type: Api
           Properties:
             Path: /admin/users/{id}
             Method: get
-
+            RestApiId: !Ref RestfulApi
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  GetUsersApi:
+  ApiBaseUrl:
     Description: "API Gateway endpoint URL for Prod stage for Hello World function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/admin/users/"
-  GetUserListFunction:
-    Description: "Hello World Lambda Function ARN"
-    Value: !GetAtt GetUserListFunction.Arn
-  GetUserListFunctionIamRole:
-    Description: "Implicit IAM Role created for Hello World function"
-    Value: !GetAtt GetUserListFunctionRole.Arn
+    Value: !Sub "https://${RestfulApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
+  # GetUserListFunction:
+  #   Description: "Hello World Lambda Function ARN"
+  #   Value: !GetAtt GetUserListFunction.Arn
+  # GetUserListFunctionIamRole:
+  #   Description: "Implicit IAM Role created for Hello World function"
+  #   Value: !GetAtt GetUserListFunctionRole.Arn
