@@ -12,7 +12,7 @@
     "start": "npm run build && sam local start-api",
     "test": "mocha tests/unit/",
     "lint": "eslint . --ext .ts",
-    "deploy": "sam build && sam deploy"
+    "deploy": "npm run build && sam deploy --no-confirm-changeset"
   },
   "husky": {
     "hooks": {
