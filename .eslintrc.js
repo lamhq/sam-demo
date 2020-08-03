@@ -8,6 +8,11 @@ const { rules: baseVariablesRules } = require('eslint-config-airbnb-base/rules/v
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 2020, // Allows for the parsing of modern ECMAScript features
+    sourceType: 'module', // Allows for the use of imports
+    project: './tsconfig.json',
+  },
   plugins: ['@typescript-eslint', 'prettier'],
   extends: [
     'airbnb-base',
@@ -195,6 +200,22 @@ module.exports = {
         ...baseImportsRules['import/extensions'][2],
         ts: 'never',
         tsx: 'never',
+      },
+    ],
+
+    // Append 'ts' and 'tsx' extensions to Airbnb 'import/no-extraneous-dependencies' rule
+    // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-extraneous-dependencies.md
+    'import/no-extraneous-dependencies': [
+      baseImportsRules['import/no-extraneous-dependencies'][0],
+      {
+        ...baseImportsRules['import/no-extraneous-dependencies'][1],
+        devDependencies: [
+          ...baseImportsRules['import/no-extraneous-dependencies'][1].devDependencies.map((glob) =>
+            glob.replace('js,jsx', 'js,jsx,ts,tsx'),
+          ),
+          '**/jest.setup.ts',
+          '.eslintrc.js',
+        ],
       },
     ],
   },
