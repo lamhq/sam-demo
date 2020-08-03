@@ -1,16 +1,13 @@
-import axios from 'axios';
 import { APIGatewayProxyHandler } from 'aws-lambda';
+import { format } from 'date-fns';
 
 export const getUserList: APIGatewayProxyHandler = async (event, context) => {
   let response;
   try {
-    const resp = await axios.get('https://www.metaweather.com/api/location/search', {
-      params: { query: 'London' },
-    });
-
+    const formattedDate = format(new Date(), 'EEEE');
     response = {
       statusCode: 200,
-      body: JSON.stringify(resp.data),
+      body: JSON.stringify(formattedDate),
     };
   } catch (err) {
     console.log(err);
