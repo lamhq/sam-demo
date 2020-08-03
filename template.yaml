@@ -24,13 +24,6 @@ Resources:
       LicenseInfo: 'MIT'
       RetentionPolicy: Delete
 
-  AuthorizeFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Metadata:
-      BuildMethod: makefile
-    Properties:
-      Handler: src/common/handlers.authorize
-  
   RestfulApi:
     Type: AWS::Serverless::Api
     Properties:
@@ -40,6 +33,13 @@ Resources:
           BearerTokenAuthorizer:
             FunctionArn: !GetAtt AuthorizeFunction.Arn
 
+  AuthorizeFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Metadata:
+      BuildMethod: makefile
+    Properties:
+      Handler: src/common/handlers.authorize
+  
   GetUserListFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Metadata:
