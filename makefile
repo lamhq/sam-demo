@@ -1,3 +1,3 @@
 .DEFAULT:
-	cp -R dist $(ARTIFACTS_DIR)
+	cp -R dist/* $(ARTIFACTS_DIR)
 

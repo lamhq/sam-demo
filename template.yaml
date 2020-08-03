@@ -29,7 +29,7 @@ Resources:
     Metadata:
       BuildMethod: makefile
     Properties:
-      Handler: dist/common/handlers.authorize
+      Handler: src/common/handlers.authorize
   
   RestfulApi:
     Type: AWS::Serverless::Api
@@ -45,7 +45,7 @@ Resources:
     Metadata:
       BuildMethod: makefile
     Properties:
-      Handler: dist/admin/user/handlers.getUserList
+      Handler: src/admin/user/handlers.getUserList
       Events:
         GetUserListEvent:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -61,7 +61,7 @@ Resources:
     Metadata:
       BuildMethod: makefile
     Properties:
-      Handler: dist/admin/user/handlers.getUserDetail
+      Handler: src/admin/user/handlers.getUserDetail
       Events:
         GetUserDetailEvent:
           # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api

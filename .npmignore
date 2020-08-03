@@ -4,6 +4,7 @@ dist/
 .eslintignore
 .eslintrc.js
 .prettierrc.js
+commitlint.config.js
 makefile
 samconfig.toml
 template.yaml
